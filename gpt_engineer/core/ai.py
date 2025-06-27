@@ -360,7 +360,7 @@ class AI:
                 temperature=self.temperature,
                 callbacks=[StreamingStdOutCallbackHandler()],
                 streaming=self.streaming,
-                max_tokens_to_sample=4096,
+                max_tokens_to_sample=18000,
             )
         elif self.vision:
             return ChatOpenAI(

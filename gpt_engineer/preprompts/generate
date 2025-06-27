@@ -1,5 +1,5 @@
 Think step by step and reason yourself to the correct decisions to make sure we get it right.
-First lay out the names of the core classes, functions, methods that will be necessary, As well as a quick comment on their purpose.
+First lay out the names of the core classes, functions, methods that will be necessary, as well as a quick comment on their purpose.
 
 FILE_FORMAT
 
@@ -7,9 +7,91 @@ You will start with the "entrypoint" file, then go to the ones that are imported
 Please note that the code should be fully functional. No placeholders.
 
 Follow a language and framework appropriate best practice file naming convention.
-Make sure that files contain all imports, types etc.  The code should be fully functional. Make sure that code in different files are compatible with each other.
-Ensure to implement all code, if you are unsure, write a plausible implementation.
-Include module dependency or package manager dependency definition file.
-Before you finish, double check that all parts of the architecture is present in the files.
+Make sure that files contain all imports, types etc. The code should be fully functional.
+Make sure that code in different files are compatible with each other.
+Ensure to implement all code; if you are unsure, write a plausible implementation.
+Before you finish, double check that all parts of the architecture are present in the files.
 
-When you are done, write finish with "this concludes a fully working implementation".
+🛠️ Project Rules:
+
+The project is already configured.
+
+The main source code is under app/src/.
+
+Always generate a valid app/src/index.html.
+
+Pages must be created or edited in app/src/pages/.
+
+The components in the app/src/components/ui/ folder are already defined and must be reused as they are — do not create or modify any components inside this folder.
+
+The components in the app/src/components/ui/ folder are already defined and must be reused as they are — do not create or modify any components inside this folder. Always use icons from the lucide-react library for all iconography.
+
+You cannot modify the structure of app/src/App.tsx, but you can add new routes inside it for the pages created in app/src/pages/.
+
+Do not modify package.json.
+
+Do not alter any other files, folders, or configurations outside of src/pages/, src/components/, and the routing setup in App.tsx.
+
+✅ What you can do:
+
+✅ Create or update pages inside app/src/pages/.
+
+✅ If it's the first page in the project, create it as Index.tsx.
+
+✅ Add new routes in app/src/App.tsx for the new pages, without changing its current structure.
+
+✅ Create components in app/src/components/ for reusable elements.
+
+🎨 Styling & Best Practices:
+
+Use only Tailwind CSS utility classes for styling.
+
+Do not use CSS files — Tailwind only.
+
+Ensure good contrast, accessibility, and a modern visual style.
+
+Follow good React development practices:
+
+Use functional components and React Hooks (useState, useEffect, useRef, etc.).
+
+Use clear and semantic names for components and props.
+
+Ensure single responsibility for components.
+
+Extract reusable UI elements into the components folder.
+
+Prefer using TypeScript for all type definitions.
+
+Add concise comments for complex logic or components.
+
+Avoid duplicated logic and code repetition.
+
+📦 You can use:
+
+React Router for page routing.
+
+React Query for async data fetching.
+
+zod, react-hook-form, date-fns, recharts, embla-carousel-react (already installed).
+
+Always use these libraries according to their official documentation.
+
+📄 Routing Boilerplate (already in App.tsx):
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NotFound from "./pages/NotFound";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<NotFound />} />
+        {/* Add your new routes here */}
+      </Routes>
+    </BrowserRouter>
+  </QueryClientProvider>
+);
+
+export default App;

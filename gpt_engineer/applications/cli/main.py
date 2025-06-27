@@ -281,7 +281,7 @@ def format_installed_packages(packages):
 def main(
     project_path: str = typer.Argument(".", help="path"),
     model: str = typer.Option(
-        os.environ.get("MODEL_NAME", "gpt-4o"), "--model", "-m", help="model id string"
+        os.environ.get("MODEL_NAME", "claude-sonnet-4-20250514"), "--model", "-m", help="model id string"
     ),
     temperature: float = typer.Option(
         0.1,

@@ -25,7 +25,6 @@ execute_entrypoint : function
 setup_sys_prompt_existing_code : function
     Sets up the system prompt for improving existing code.
 
-
 improve : function
     Improves the code based on user input and returns the updated files.
 """
@@ -72,6 +71,33 @@ def curr_fn() -> str:
     return inspect.stack()[1].function
 
 
+def _get_component_references(preprompts: MutableMapping[Union[str, Path], str]) -> str:
+    """
+    Collects all component-specific references from preprompts.
+    
+    Searches for keys ending with '_reference' (e.g., 'button_reference', 'form_reference')
+    and concatenates their values.
+    
+    Parameters
+    ----------
+    preprompts : MutableMapping[Union[str, Path], str]
+        A mapping of preprompt messages to guide the AI model.
+    
+    Returns
+    -------
+    str
+        Concatenated component references or empty string if none found.
+    """
+    component_refs = []
+    
+    for key, value in preprompts.items():
+        # Check if key ends with '_reference' (e.g., button_reference, form_reference)
+        if isinstance(key, (str, Path)) and str(key).endswith('_reference'):
+            component_refs.append(f"\n{value}")
+    
+    return "".join(component_refs) if component_refs else ""
+
+
 def setup_sys_prompt(preprompts: MutableMapping[Union[str, Path], str]) -> str:
     """
     Sets up the system prompt for generating code.
@@ -86,11 +112,14 @@ def setup_sys_prompt(preprompts: MutableMapping[Union[str, Path], str]) -> str:
     str
         The system prompt message for the AI model.
     """
+    component_references = _get_component_references(preprompts)
+    
     return (
         preprompts["roadmap"]
         + preprompts["generate"].replace("FILE_FORMAT", preprompts["file_format"])
         + "\nUseful to know:\n"
         + preprompts["philosophy"]
+        + component_references
     )
 
 
@@ -110,11 +139,14 @@ def setup_sys_prompt_existing_code(
     str
         The system prompt message for the AI model to improve existing code.
     """
+    component_references = _get_component_references(preprompts)
+    
     return (
         preprompts["roadmap"]
         + preprompts["improve"].replace("FILE_FORMAT", preprompts["file_format_diff"])
         + "\nUseful to know:\n"
         + preprompts["philosophy"]
+        + component_references
     )
 
 
